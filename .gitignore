@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Environment secrets — never commit
+.env
+
+# Uploaded files — do not commit user data
+uploads/*
+!uploads/.gitkeep
+
+# SQLite database — contains user data
+data/*.db
+data/*.sqlite
+data/*.db-shm
+data/*.db-wal
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

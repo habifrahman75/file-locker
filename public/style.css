@@ -1,0 +1,114 @@
+:root {
+  --bg: #2ab8ff;          /* slate-900 */
+  --card: #111827;        /* gray-900 */
+  --text: #e5e7eb;        /* gray-200 */
+  --muted: #9ca3af;       /* gray-400 */
+  --primary: #3b82f6;     /* blue-500 */
+  --primary-dark: #2563eb;/* blue-600 */
+  --accent: #22c55e;      /* green-500 */
+  --danger: #ef4444;      /* red-500 */
+  --shadow: rgba(0,0,0,0.3);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(1200px 600px at 20% 10%, #1f2937 0%, var(--bg) 50%);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.container {
+  width: 100%;
+  max-width: 720px;
+  background: var(--card);
+  border: 1px solid #1f2937;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+h1, h2 {
+  margin: 0 0 16px 0;
+  font-weight: 700;
+}
+
+h1 { font-size: 26px; }
+h2 { font-size: 20px; color: var(--text); }
+
+.label {
+  display: block;
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+input[type="file"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  background: #0b1220;
+  border: 1px solid #243042;
+  color: var(--text);
+  border-radius: 10px;
+  outline: none;
+}
+
+input::placeholder { color: #6b7280; }
+
+.btn {
+  display: inline-block;
+  width: fit-content;
+  padding: 10px 16px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: transform .02s ease-in-out, background .2s ease;
+}
+
+.btn:hover { background: var(--primary-dark); }
+.btn:active { transform: translateY(1px); }
+.btn.secondary { background: #374151; }
+.btn.tiny { padding: 6px 10px; font-size: 13px; }
+
+.actions { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+.list {
+  list-style: none;
+  margin: 12px 0 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.list li {
+  background: #0b1220;
+  border: 1px solid #243042;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text);
+}
+
+.list li span { overflow-wrap: anywhere; }
+a { color: #93c5fd; text-decoration: none; }
+a:hover { text-decoration: underline; }

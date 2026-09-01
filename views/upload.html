@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FiLE LoCKeR — Upload files securely with password protection, expiry control, and download limits." />
+  <title>Upload Files — FiLE LoCKeR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+
+<div class="upload-page">
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <nav class="upload-nav">
+    <a href="/" class="nav-logo" aria-label="FiLE LoCKeR home">
+      <span class="logo-lock">🔐</span>
+      <span class="nav-logo-text">FiLE LoCKeR</span>
+    </a>
+    <span class="text-muted" style="font-size:0.82rem;">Password-Protected Secure File Sharing</span>
+  </nav>
+
+  <!-- ═══════════ MAIN ═══════════ -->
+  <main class="upload-main">
+
+    <!-- ── Upload Form State ── -->
+    <div class="upload-card" id="uploadState">
+
+      <div class="upload-header">
+        <h1 class="upload-title">Upload Files Securely</h1>
+        <p class="upload-sub">Files are protected with a password and accessible only via a unique link.</p>
+      </div>
+
+      <!-- Drop Zone -->
+      <div
+        class="drop-zone"
+        id="dropZone"
+        role="button"
+        tabindex="0"
+        aria-label="Drop files here or click to browse"
+        onclick="document.getElementById('fileInput').click()"
+        onkeydown="if(event.key==='Enter'||event.key===' ')document.getElementById('fileInput').click()"
+      >
+        <span class="dz-icon" id="dzIcon">📁</span>
+        <div class="dz-title">Drag &amp; drop files here</div>
+        <div class="dz-sub">or <strong style="color:var(--primary-light);">click to browse</strong></div>
+        <div class="dz-types">PDF · DOC · XLS · PPT · JPG · PNG · ZIP · TXT — max 100 MB each</div>
+        <input type="file" id="fileInput" name="files" multiple
+          accept=".pdf,.txt,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.zip"
+          aria-hidden="true"
+        />
+      </div>
+
+      <!-- File List -->
+      <div class="file-list" id="fileList"></div>
+
+      <!-- Client-side validation error -->
+      <div id="fileError" class="alert alert-error" style="display:none;margin-top:0.75rem;" role="alert"></div>
+
+      <!-- ── Password Section ── -->
+      <div style="margin-top:1.75rem;">
+        <h2 style="font-size:1rem;font-weight:700;margin-bottom:1.25rem;">🔐 Protect Your Files</h2>
+
+        <div class="form-group">
+          <label class="field-label" for="password">Password <span style="color:var(--danger)">*</span></label>
+          <div class="input-icon-wrap">
+            <input
+              type="password"
+              id="password"
+              class="field-input"
+              placeholder="Set a strong password (min. 6 characters)"
+              autocomplete="new-password"
+              minlength="6"
+              aria-describedby="strengthLabel"
+            />
+            <button type="button" class="input-toggle-btn" onclick="togglePwd('password',this)" aria-label="Toggle password visibility">
+              <span class="eye-icon">👁</span>
+            </button>
+          </div>
+          <div class="strength-bar-wrap" aria-hidden="true">
+            <div class="strength-bar" id="strengthBar"></div>
+          </div>
+          <div id="strengthLabel" style="font-size:0.75rem;color:var(--text-subtle);margin-top:0.3rem;"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="field-label" for="confirmPassword">Confirm Password <span style="color:var(--danger)">*</span></label>
+          <div class="input-icon-wrap">
+            <input
+              type="password"
+              id="confirmPassword"
+              class="field-input"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+            />
+            <button type="button" class="input-toggle-btn" onclick="togglePwd('confirmPassword',this)" aria-label="Toggle confirm password visibility">
+              <span class="eye-icon">👁</span>
+            </button>
+          </div>
+          <div id="confirmHint" style="font-size:0.75rem;margin-top:0.3rem;"></div>
+        </div>
+      </div>
+
+      <!-- ── Access Settings ── -->
+      <div style="margin-top:1.25rem;">
+        <h2 style="font-size:1rem;font-weight:700;margin-bottom:1.25rem;">⚙️ Access Settings</h2>
+
+        <div class="settings-grid">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="field-label" for="expiry">File Expires After</label>
+            <select id="expiry" class="field-input" aria-label="File expiry duration">
+              <option value="24">24 Hours</option>
+              <option value="72">3 Days</option>
+              <option value="168" selected>7 Days</option>
+              <option value="720">30 Days</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="field-label" for="maxDownloads">Download Limit</label>
+            <select id="maxDownloads" class="field-input" aria-label="Maximum number of downloads">
+              <option value="0">Unlimited</option>
+              <option value="1">1 Download</option>
+              <option value="5">5 Downloads</option>
+              <option value="10">10 Downloads</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Error -->
+      <div id="uploadError" class="alert alert-error" style="display:none;margin-top:1.25rem;" role="alert"></div>
+
+      <!-- Upload Button -->
+      <button
+        class="btn btn-primary btn-full"
+        id="uploadBtn"
+        onclick="startUpload()"
+        disabled
+        style="margin-top:1.5rem;"
+        aria-label="Upload files"
+      >
+        <span id="uploadBtnText">🔒 Upload Files Securely</span>
+      </button>
+
+      <!-- Progress -->
+      <div class="progress-wrap" id="progressWrap" aria-live="polite">
+        <div class="progress-label">
+          <span id="progressStatus">Uploading…</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;text-align:center;">
+        <a href="/" class="link-muted">← Back to Home</a>
+      </div>
+
+    </div><!-- /uploadState -->
+
+    <!-- ── Success State ── -->
+    <div class="upload-card" id="successState" style="display:none;">
+
+      <div class="success-header">
+        <div class="success-icon">✅</div>
+        <div>
+          <div class="success-title">Files Uploaded Successfully!</div>
+          <div class="success-sub text-muted">Save your links below. The management link is private — keep it safe.</div>
+        </div>
+      </div>
+
+      <div id="successFiles"></div>
+
+      <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="resetForm()">📤 Upload Another File</button>
+        <a href="/" class="btn btn-secondary">← Home</a>
+      </div>
+
+    </div><!-- /successState -->
+
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer style="padding:1.25rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+    <span class="text-subtle" style="font-size:0.78rem;">🔐 <strong style="color:var(--text-muted);">FiLE LoCKeR</strong></span>
+    <span class="footer-powered" style="font-size:0.78rem;">Powered by <strong>Rahman Creations</strong></span>
+  </footer>
+
+</div><!-- /upload-page -->
+
+<script src="/js/upload.js"></script>
+
+</body>
+</html>
