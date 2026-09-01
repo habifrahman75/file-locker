@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "file-locker",
   "version": "2.0.0",
   "description": "FiLE LoCKeR — Secure file sharing with password protection, expiry, and download limits.",
@@ -21,7 +20,6 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {}
-=======
   "name": "upload",
   "version": "1.0.0",
   "description": "",
@@ -38,5 +36,4 @@
     "multer": "^2.0.2",
     "uuid": "^11.1.0"
   }
->>>>>>> 24f6fdc3ae59b5267e0f421aa37ce007af03e0f2
 }
