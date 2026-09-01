@@ -7,7 +7,12 @@
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
-  "keywords": ["file-sharing", "secure", "password-protection", "temporary-files"],
+  "keywords": [
+    "file-sharing",
+    "secure",
+    "password-protection",
+    "temporary-files"
+  ],
   "author": "Rahman Creations",
   "license": "ISC",
   "dependencies": {
