@@ -21,7 +21,7 @@ const PORT             = parseInt(process.env.PORT) || 3000;
 const MAX_FILE_SIZE_MB = parseInt(process.env.MAX_FILE_SIZE_MB) || 100;
 const UPLOAD_DIR       = path.resolve(process.env.UPLOAD_DIR || path.join(__dirname, 'uploads'));
 const BASE_URL         = process.env.BASE_URL || `http://localhost:${PORT}`;
-
+app.set('trust proxy', 1);
 // Ensure upload directory exists
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
