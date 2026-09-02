@@ -452,7 +452,11 @@ function renderManagePage(id, token, file) {
 }
 
 // ─── Routes ──────────────────────────────────────────────────────────────────
-
+// Google AdSense ads.txt
+app.get('/ads.txt', (_req, res) => {
+  res.type('text/plain');
+  res.send('google.com, pub-4843687536869422, DIRECT, f08c47fec0942fa0');
+});
 // Landing page
 app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'landing.html'));
