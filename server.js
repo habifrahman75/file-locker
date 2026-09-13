@@ -667,6 +667,14 @@ app.get('/dl/:id/:token', (req, res) => {
 });
 
 // ─── Management Page ──────────────────────────────────────────────────────────
+// Monetag verification
+app.get('/sw.js', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'sw.js'));
+});
+// Landing page
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'landing.html'));
+});
 
 app.get('/manage/:id', (req, res) => {
   try {
